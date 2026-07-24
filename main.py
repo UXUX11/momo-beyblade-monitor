@@ -20,7 +20,6 @@ print(f"官方商品：{len(products)}")
 print(f"新增商品：{len(new_products)}")
 print(f"開賣時間變動：{len(sale_changes)}")
 
-update_status(products)
 
 send_new_products(new_products)
 send_sale_changes(sale_changes)
@@ -33,5 +32,6 @@ if now.hour == 9 and now.minute < 15:
     db = load_database()
 
     if need_daily_summary(db):
+        update_status(products)   
         send_daily_summary(products)
         mark_daily_summary(db)
