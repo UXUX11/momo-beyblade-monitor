@@ -22,12 +22,8 @@ def send_new_products(products):
             WEBHOOK_URL,
             json={"content": message},
             timeout=30,
-        )
-<<<<<<< HEAD
-=======
+            )
         send_line(message)
-def send_sale_changes(changes):
->>>>>>> 549d44f (Add LINE notifications)
 
 
 def send_sale_changes(changes):
@@ -48,15 +44,9 @@ def send_sale_changes(changes):
         requests.post(
             WEBHOOK_URL,
             json={"content": message},
-<<<<<<< HEAD
             timeout=30,
         )
-=======
-            timeout=30
-        )        
         send_line(message)
-def load_message_id():
->>>>>>> 549d44f (Add LINE notifications)
 
 
 def load_message_id():
