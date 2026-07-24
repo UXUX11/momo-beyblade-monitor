@@ -6,3 +6,6 @@ status_message_id.txt
 
 .env
 config.py
+
+next_data.txt
+page.html
