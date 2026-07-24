@@ -1,5 +1,6 @@
 import json
 import os
+from datetime import date
 
 DB_FILE = "known_products.json"
 
@@ -33,6 +34,7 @@ def check_updates(products):
 
         for p in products:
             db[p["code"]] = p
+            db["last_daily_summary"] = ""
 
         save_database(db)
 
@@ -66,3 +68,14 @@ def check_updates(products):
     save_database(db)
 
     return new_products, sale_changes
+
+
+
+def need_daily_summary(db):
+    today = date.today().isoformat()
+    return db.get("last_daily_summary", "") != today
+
+
+def mark_daily_summary(db):
+    db["last_daily_summary"] = date.today().isoformat()
+    save_database(db)

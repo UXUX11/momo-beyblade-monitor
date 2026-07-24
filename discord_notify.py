@@ -104,3 +104,20 @@ def update_status(products):
         return
 
     r.raise_for_status()
+
+
+
+def send_daily_summary(products):
+
+    msg = "📦 MOMO 官方商品（每日09:00）\n\n"
+
+    for i, p in enumerate(products, 1):
+
+        msg += (
+            f"{i}. {p['name']}\n"
+            f"💰 {p['price']}\n"
+            f"🕒 {p['sale']}\n"
+            f"🔗 {p['url']}\n\n"
+        )
+
+    send_line(msg)
