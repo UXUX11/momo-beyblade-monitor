@@ -1,19 +1,14 @@
-import requests
-
-from config import WEBHOOK_URL
-
 import os
+import requests
 
 from config import WEBHOOK_URL, MESSAGE_ID_FILE
 
 
 def send_new_products(products):
-
     if not products:
         return
 
     for p in products:
-
         message = (
             "🆕 **MOMO 新商品**\n\n"
             f"**{p['name']}**\n\n"
@@ -25,18 +20,16 @@ def send_new_products(products):
 
         requests.post(
             WEBHOOK_URL,
-            json={
-                "content": message
-            },
-            timeout=30
+            json={"content": message},
+            timeout=30,
         )
-def send_sale_changes(changes):
 
+
+def send_sale_changes(changes):
     if not changes:
         return
 
     for item in changes:
-
         p = item["product"]
 
         message = (
@@ -50,10 +43,11 @@ def send_sale_changes(changes):
         requests.post(
             WEBHOOK_URL,
             json={"content": message},
-            timeout=30
-        )        
-def load_message_id():
+            timeout=30,
+        )
 
+
+def load_message_id():
     if not os.path.exists(MESSAGE_ID_FILE):
         return None
 
@@ -62,19 +56,17 @@ def load_message_id():
 
 
 def save_message_id(message_id):
-
     with open(MESSAGE_ID_FILE, "w") as f:
         f.write(message_id)
-def update_status(products):
 
+
+def update_status(products):
     products = sorted(products, key=lambda x: x["sale"])
 
     lines = []
-
     lines.append("📦 **MOMO 官方商品**\n")
 
     for p in products:
-
         lines.append(
             f"**{p['name']}**\n"
             f"💰 售價：{p['price']} 元\n"
@@ -87,35 +79,26 @@ def update_status(products):
 
     message_id = load_message_id()
 
-    # 第一次建立
     if message_id is None:
-
         r = requests.post(
             WEBHOOK_URL + "?wait=true",
             json={"content": content},
-            timeout=30
+            timeout=30,
         )
 
         r.raise_for_status()
-
         save_message_id(r.json()["id"])
-
         return
 
-    # 更新舊訊息
     r = requests.patch(
         WEBHOOK_URL + f"/messages/{message_id}",
         json={"content": content},
-        timeout=30
+        timeout=30,
     )
 
-    # 如果訊息被刪掉，就重新建立
     if r.status_code == 404:
-
         os.remove(MESSAGE_ID_FILE)
-
         update_status(products)
-
         return
 
-    r.raise_for_status()                
+    r.raise_for_status()
