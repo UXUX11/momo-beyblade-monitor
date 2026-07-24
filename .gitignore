@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+
+known_products.json
+status_message_id.txt
+
+.env
+config.py
