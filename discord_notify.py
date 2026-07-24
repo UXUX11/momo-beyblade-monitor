@@ -80,6 +80,7 @@ def update_status(products):
             f"💰 售價：{p['price']} 元\n"
             f"📦 庫存：{p['stock']}\n"
             f"🕒 開賣：{p['sale']}\n"
+            f"🛒 商品頁：{p['url']}\n"
         )
 
     content = "\n".join(lines)
