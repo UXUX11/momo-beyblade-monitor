@@ -26,6 +26,7 @@ send_sale_changes(sale_changes)
 
 # 每日09:00 LINE摘要
 now = datetime.now()
+print("現在時間：", now)
 
 if now.hour == 9 and now.minute < 15:
 
