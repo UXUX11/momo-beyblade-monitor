@@ -33,6 +33,9 @@ if now.hour == 9 and now.minute < 15:
     db = load_database()
 
     if need_daily_summary(db):
+        print("開始發送每日摘要")
         update_status(products)   
         send_daily_summary(products)
         mark_daily_summary(db)
+    else:
+        print("今天已經發送過每日摘要")
