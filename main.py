@@ -11,7 +11,7 @@ from discord_notify import (
     send_sale_changes,
     send_daily_summary,
 )
-from datetime import datetime
+from datetime import datetime, timedelta
 products = get_products()
 
 new_products, sale_changes = check_updates(products)
@@ -25,8 +25,8 @@ send_new_products(new_products)
 send_sale_changes(sale_changes)
 
 # 每日09:00 LINE摘要
-now = datetime.now()
-print("現在時間：", now)
+now = datetime.utcnow() + timedelta(hours=8)
+print("台灣時間：", now)
 
 if now.hour == 9 and now.minute < 15:
 
